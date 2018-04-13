@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".Activities.SigninActivity">
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="25dp"
+        android:text="username"/>
+    <EditText
+        android:id="@+id/etSigninUsername"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="username"
+        android:inputType="textEmailAddress"/>
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="25dp"
+        android:text="password"/>
+    <EditText
+        android:id="@+id/etSigninPassword"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="password"
+        android:inputType="textPassword"/>
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="25dp"
+        android:text="password agiain"/>
+    <EditText
+        android:id="@+id/etSigninPasswordRepeat"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="password again"
+        android:inputType="textPassword"/>
+    <Button
+        android:id="@+id/btSignin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="signin"/>
+</LinearLayout>
