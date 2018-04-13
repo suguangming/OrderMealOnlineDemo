@@ -1,14 +1,16 @@
 package com.example.mingw.restaurant;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.example.mingw.restaurant.Activities.DetailActivity;
 import java.util.List;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
@@ -17,14 +19,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     private List<Food> mFoodList;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        View foodView;
+        CardView foodCardView;
         ImageView foodImage;
         TextView foodName;
         TextView foodPrice;
 
         public ViewHolder (View view) {
             super(view);
-            foodView = view;
+            foodCardView = (CardView) view;
             foodImage = (ImageView) view.findViewById(R.id.food_image);
             foodName = (TextView) view.findViewById(R.id.food_name);
             foodPrice = (TextView) view.findViewById(R.id.food_price);
@@ -42,20 +44,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         View view = LayoutInflater.from(parent.getContext())
             .inflate(R.layout.food_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.foodView.setOnClickListener(new View.OnClickListener() {
+        holder.foodCardView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 Food food = mFoodList.get(position);
-                Toast.makeText(v.getContext(), "u clicked view " + food.getName() + food.getId(),
-                    Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.foodImage.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Food food = mFoodList.get(position);
-                Toast.makeText(v.getContext(), "u clicked view " + food.getName() + food.getId(),
-                    Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra(DetailActivity.FOOD_NAME, food.getName());
+                intent.putExtra(DetailActivity.FOOD_CONTENT, food.getDescription());
+                intent.putExtra(DetailActivity.FOOD_IMAGE_URL, food.getImgUrl());
+                mContext.startActivity(intent);
             }
         });
         return holder;

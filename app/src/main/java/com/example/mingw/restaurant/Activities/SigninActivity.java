@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 import com.example.mingw.restaurant.R;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -24,6 +25,8 @@ public class SigninActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tb_signin_toolbar);
+        setSupportActionBar(toolbar);
         final EditText mUsername = (EditText) findViewById(R.id.etSigninUsername);
         final EditText mPassword = (EditText) findViewById(R.id.etSigninPassword);
         final EditText mPasswordRepeat = (EditText) findViewById(R.id.etSigninPasswordRepeat);

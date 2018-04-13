@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 import com.example.mingw.restaurant.Food;
 import com.example.mingw.restaurant.FoodAdapter;
 import com.example.mingw.restaurant.R;
@@ -29,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tb_main_toolbar);
+        setSupportActionBar(toolbar);
         RecyclerView recyclerView;
         LinearLayoutManager manager;
-        // TODO swipe refresh
         recyclerView = findViewById(R.id.recyclerView_mainList);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);

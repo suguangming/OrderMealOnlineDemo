@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 import com.example.mingw.restaurant.R;
 import java.io.IOException;
 import okhttp3.Call;
@@ -22,7 +23,6 @@ import static com.example.mingw.restaurant.utils.HttpUtil.sendOkHttpRequest;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private String responseData;
     private String parameter;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tb_login_toolbar);
+        setSupportActionBar(toolbar);
         Button buttonLogin = (Button) findViewById(R.id.btLogin);
         Button buttonSignin = (Button) findViewById(R.id.btLoginSignin);
         final EditText editTextUsername = (EditText) findViewById(R.id.etLoginUsername);
