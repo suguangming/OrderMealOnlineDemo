@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.example.mingw.restaurant.Activities.DetailActivity;
+import com.example.mingw.restaurant.activities.DetailActivity;
 import java.util.List;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
@@ -27,9 +27,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         public ViewHolder (View view) {
             super(view);
             foodCardView = (CardView) view;
-            foodImage = (ImageView) view.findViewById(R.id.food_image);
-            foodName = (TextView) view.findViewById(R.id.food_name);
-            foodPrice = (TextView) view.findViewById(R.id.food_price);
+            foodImage = (ImageView) view.findViewById(R.id.iv_food_food_image);
+            foodName = (TextView) view.findViewById(R.id.tv_food_food_name);
+            foodPrice = (TextView) view.findViewById(R.id.tv_food_food_price);
         }
     }
 

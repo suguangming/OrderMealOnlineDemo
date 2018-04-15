@@ -1,4 +1,4 @@
-package com.example.mingw.restaurant.Activities;
+package com.example.mingw.restaurant.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,13 +27,13 @@ public class SigninActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signin);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_signin_toolbar);
         setSupportActionBar(toolbar);
-        final EditText mUsername = (EditText) findViewById(R.id.etSigninUsername);
-        final EditText mPassword = (EditText) findViewById(R.id.etSigninPassword);
-        final EditText mPasswordRepeat = (EditText) findViewById(R.id.etSigninPasswordRepeat);
+        final EditText mUsername = (EditText) findViewById(R.id.et_signin_username);
+        final EditText mPassword = (EditText) findViewById(R.id.et_signin_password);
+        final EditText mPasswordRepeat = (EditText) findViewById(R.id.et_signin_password_repeat);
         final InputMethodManager inputMethodManager =(InputMethodManager) this.getApplicationContext()
             .getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        Button mButtonSignin = (Button) findViewById(R.id.btSignin);
+        Button mButtonSignin = (Button) findViewById(R.id.bt_signin_signin_button);
         mButtonSignin.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 String mUsernameText = mUsername.getText().toString();

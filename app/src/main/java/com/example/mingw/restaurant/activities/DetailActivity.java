@@ -1,4 +1,4 @@
-package com.example.mingw.restaurant.Activities;
+package com.example.mingw.restaurant.activities;
 
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;

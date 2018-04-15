@@ -18,7 +18,7 @@
         android:layout_height="25dp"
         android:text="username"/>
     <EditText
-        android:id="@+id/etSigninUsername"
+        android:id="@+id/et_signin_username"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="username"
@@ -28,7 +28,7 @@
         android:layout_height="25dp"
         android:text="password"/>
     <EditText
-        android:id="@+id/etSigninPassword"
+        android:id="@+id/et_signin_password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="password"
@@ -38,13 +38,13 @@
         android:layout_height="25dp"
         android:text="password agiain"/>
     <EditText
-        android:id="@+id/etSigninPasswordRepeat"
+        android:id="@+id/et_signin_password_repeat"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="password again"
         android:inputType="textPassword"/>
     <Button
-        android:id="@+id/btSignin"
+        android:id="@+id/bt_signin_signin_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="signin"/>

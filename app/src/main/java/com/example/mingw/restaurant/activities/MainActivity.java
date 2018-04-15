@@ -1,4 +1,4 @@
-package com.example.mingw.restaurant.Activities;
+package com.example.mingw.restaurant.activities;
 
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_main_toolbar);
         setSupportActionBar(toolbar);
-        RecyclerView recyclerView;
+        RecyclerView recyclerView = findViewById(R.id.rv_main_food_list);
         LinearLayoutManager manager;
-        recyclerView = findViewById(R.id.recyclerView_mainList);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         foodList = new ArrayList<>();
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         getData();
 
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.sr_main_swipe_refresh);
         swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {

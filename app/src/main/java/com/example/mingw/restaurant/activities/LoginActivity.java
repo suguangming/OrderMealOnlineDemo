@@ -1,4 +1,4 @@
-package com.example.mingw.restaurant.Activities;
+package com.example.mingw.restaurant.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,10 +34,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_login_toolbar);
         setSupportActionBar(toolbar);
-        Button buttonLogin = (Button) findViewById(R.id.btLogin);
-        Button buttonSignin = (Button) findViewById(R.id.btLoginSignin);
-        final EditText editTextUsername = (EditText) findViewById(R.id.etLoginUsername);
-        final EditText editTextPassword = (EditText) findViewById(R.id.etSigninPassword);
+        Button buttonLogin = (Button) findViewById(R.id.bt_login_login_button);
+        Button buttonSignin = (Button) findViewById(R.id.bt_login_signin_button);
+        final EditText editTextUsername = (EditText) findViewById(R.id.et_login_username);
+        final EditText editTextPassword = (EditText) findViewById(R.id.et_signin_password);
         final InputMethodManager inputMethodManager =(InputMethodManager) this.getApplicationContext()
             .getSystemService(Context.INPUT_METHOD_SERVICE);
         final CheckBox checkBoxRememberPassword = (CheckBox) findViewById(R.id.cbRememberPassword);
