@@ -7,7 +7,7 @@ import java.util.List;
 import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
-public class FoodCartDatabaseUtil {
+public class DatabaseUtil {
 
     public static void addDefaultData(){
         DataSupport.deleteAll(FoodCart.class);
@@ -28,6 +28,15 @@ public class FoodCartDatabaseUtil {
         foodCart3.setNumber(3);
         foodCart3.setPrice(30);
         foodCart3.save();
+    }
+
+    public static void addToDatabase(FoodCart foodCart) {
+        if (foodCart.isSaved()){
+            updateData("plus", foodCart.getName());
+        } else {
+            foodCart.save();
+        }
+
     }
     public static List<FoodCart> getAllFoodCartData(){
         return DataSupport.findAll(FoodCart.class);

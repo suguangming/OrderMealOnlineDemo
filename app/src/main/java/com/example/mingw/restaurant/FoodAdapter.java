@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.mingw.restaurant.activities.DetailActivity;
 import java.util.List;
@@ -50,6 +51,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
                 Food food = mFoodList.get(position);
                 Intent intent = new Intent(mContext, DetailActivity.class);
                 intent.putExtra(DetailActivity.FOOD_NAME, food.getName());
+                intent.putExtra(DetailActivity.FOOD_PRICE, food.getPrice()+"");
                 intent.putExtra(DetailActivity.FOOD_CONTENT, food.getDescription());
                 intent.putExtra(DetailActivity.FOOD_IMAGE_URL, food.getImgUrl());
                 mContext.startActivity(intent);

@@ -1,11 +1,14 @@
 package com.example.mingw.restaurant.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 import com.example.mingw.restaurant.Food;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private FoodAdapter adapter;
     private List<Food> foodList;
     private String url = "http://192.168.199.194:8080/food/index";
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_main_toolbar);
         setSupportActionBar(toolbar);
+        FloatingActionButton fabToCart = (FloatingActionButton) findViewById(R.id.fab_main_go_to_foodCart);
         RecyclerView recyclerView = findViewById(R.id.rv_main_food_list);
         LinearLayoutManager manager;
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -40,7 +45,11 @@ public class MainActivity extends AppCompatActivity {
         adapter = new FoodAdapter(foodList);
         recyclerView.setAdapter(adapter);
         getData();
-
+        fabToCart.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FoodCartActivity.class));
+            }
+        });
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.sr_main_swipe_refresh);
         swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

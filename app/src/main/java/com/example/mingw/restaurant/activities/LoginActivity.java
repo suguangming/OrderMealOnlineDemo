@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -17,13 +18,16 @@ import android.support.v7.widget.Toolbar;
 import com.example.mingw.restaurant.R;
 import java.io.IOException;
 import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.Response;
 
+import static com.example.mingw.restaurant.utils.HttpUtil.postFormByOkHttp;
 import static com.example.mingw.restaurant.utils.HttpUtil.sendOkHttpRequest;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private String parameter;
+    private String username;
+    private String password;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private static Handler handler = new Handler();
@@ -45,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         boolean isRemember =pref.getBoolean("remember_password", false);
         checkBoxRememberPassword.setChecked(isRemember);
         if (isRemember){
-            String username = pref.getString("username", "");
-            String password = pref.getString("password", "");
+            username = pref.getString("username", "");
+            password = pref.getString("password", "");
             editTextUsername.setText(username);
             editTextPassword.setText(password);
         }
@@ -54,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override public void onClick(View v) {
                 String username = editTextUsername.getText().toString();
                 String password = editTextPassword.getText().toString();
-                parameter = "?username="+username + "&password=" + password;
                 inputMethodManager.hideSoftInputFromWindow(editTextPassword.getWindowToken(), 0);
                 if (!username.isEmpty() && !password.isEmpty()) {
                     editor = pref.edit();
@@ -81,26 +84,28 @@ public class LoginActivity extends AppCompatActivity {
 
     private class LoginThread implements Runnable {
         String responseData;
-        String url = "http://192.168.199.194:8080/food/login" + parameter;
+        String url = "http://192.168.199.194:8080/food/login";
         @Override public void run() {
-             sendOkHttpRequest(url, new okhttp3.Callback() {
-                 @Override public void onFailure(Call call, IOException e) {
-                 }
-                 @Override public void onResponse(Call call, Response response) throws IOException {
-                     responseData = response.body().string();
-                     handler.post(new Runnable() {
-                         @Override public void run() {
-                             Toast.makeText(LoginActivity.this, "resp" + responseData, Toast.LENGTH_SHORT).show();
-                             if (responseData.equals("success")) {
-                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                 startActivity(intent);
-                                 LoginActivity.this.finish();
-                             }
-                         }
-                     });
-                 }
-             });
-        };
+            FormBody formBody = new FormBody.Builder().build();
+            formBody = new FormBody.Builder()
+                .add("username", username)
+                .add("password", password)
+                .build();
+            responseData = postFormByOkHttp(url, formBody);
+            handler.post(new Runnable() {
+                @Override public void run() {
+                    Toast.makeText(LoginActivity.this, "resp" + responseData, Toast.LENGTH_SHORT).show();
+                    if (responseData.equals("success")) {
+                        editor = pref.edit();
+                        editor.putString("current_username", username);
+                        editor.apply();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        LoginActivity.this.finish();
+                    }
+                }
+            });
+        }
     }
 }

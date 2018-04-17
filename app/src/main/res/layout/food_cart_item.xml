@@ -32,7 +32,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:text="数量"
                 android:textSize="18sp"
@@ -50,7 +50,7 @@
                     android:scaleType="fitXY"/>
                 <TextView
                     android:id="@+id/tv_cart_food_number"
-                    android:layout_width="60dp"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:textSize="18sp"
                     android:text="999"
@@ -62,18 +62,18 @@
                     android:src="@drawable/food_cart_plus"
                     android:scaleType="fitXY"/>
                 <TextView
-                    android:layout_width="60dp"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:text="价格"/>
                 <TextView
                     android:id="@+id/tv_cart_food_price"
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="50dp"/>
                 <ImageButton
                     android:id="@+id/bt_cart_clear"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/food_cart_trash_can"
+                    android:src="@drawable/food_cart_clear"
                     android:scaleType="fitXY"/>
             </LinearLayout>
         </LinearLayout>

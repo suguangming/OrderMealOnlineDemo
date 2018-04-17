@@ -10,7 +10,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.mingw.restaurant.utils.FoodCartDatabaseUtil;
+import com.bumptech.glide.Glide;
+import com.example.mingw.restaurant.utils.DatabaseUtil;
 import java.util.List;
 
 public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.ViewHolder> {
@@ -54,7 +55,7 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.ViewHo
             @Override public void onClick(View v) {
                 Toast.makeText(mContext, "minus", Toast.LENGTH_SHORT).show();
                 String foodCartName2Minus = holder.cartFoodName.getText().toString();
-                FoodCartDatabaseUtil.updateData("minus",foodCartName2Minus);
+                DatabaseUtil.updateData("minus",foodCartName2Minus);
                 int i = Integer.parseInt(holder.cartFoodNumber.getText().toString());
                 holder.cartFoodNumber.setText(i-1+"");
             }
@@ -63,7 +64,7 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.ViewHo
             @Override public void onClick(View v) {
                 Toast.makeText(mContext, "plus", Toast.LENGTH_SHORT).show();
                 String foodCartName2Plus = holder.cartFoodName.getText().toString();
-                FoodCartDatabaseUtil.updateData("plus",foodCartName2Plus);
+                DatabaseUtil.updateData("plus",foodCartName2Plus);
                 int i = Integer.parseInt(holder.cartFoodNumber.getText().toString());
                 holder.cartFoodNumber.setText(i+1+"");
             }
@@ -78,9 +79,9 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.ViewHo
             holder.cartFoodCardView.setVisibility(View.GONE);
         }else {
             holder.cartFoodCardView.setVisibility(View.VISIBLE);
-            // String imgUrl = "http://192.168.199.194:8080/food/img/" + foodCart.getImgUrl();
-            // Glide.with(mContext).load(imgUrl).into(holder.foodImage);
-            holder.cartFoodImage.setImageResource(R.drawable.food_burger);
+            String imgUrl = foodCart.getImgUrl();
+            Glide.with(mContext).load(imgUrl).into(holder.cartFoodImage);
+            // holder.cartFoodImage.setImageResource(R.drawable.food_burger);
             holder.cartFoodName.setText(foodCart.getName());
             holder.cartFoodNumber.setText(foodCart.getNumber()+"");
             holder.cartFoodPrice.setText("￥" + foodCart.getPrice() * foodCart.getNumber());

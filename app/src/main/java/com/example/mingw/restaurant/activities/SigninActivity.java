@@ -12,13 +12,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 import com.example.mingw.restaurant.R;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.example.mingw.restaurant.utils.HttpUtil.postFormByOkHttp;
+
 public class SigninActivity extends AppCompatActivity {
 
-    private String parameter;
+    private String mUsernameText;
+    private String mPasswordText;
     private static Handler handler = new Handler();
 
     @Override
@@ -36,14 +40,13 @@ public class SigninActivity extends AppCompatActivity {
         Button mButtonSignin = (Button) findViewById(R.id.bt_signin_signin_button);
         mButtonSignin.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                String mUsernameText = mUsername.getText().toString();
-                String mPasswordText = mPassword.getText().toString();
+                mUsernameText = mUsername.getText().toString();
+                mPasswordText = mPassword.getText().toString();
                 String mPasswordRepeatText = mPasswordRepeat.getText().toString();
                 inputMethodManager.hideSoftInputFromWindow(mPasswordRepeat.getWindowToken(), 0);
                 if (!mUsernameText.isEmpty()&&!mPasswordText.isEmpty()&&!mPasswordRepeatText.isEmpty()) {
                     //TODO 验证联网注册功能
                     if (mPasswordText.equals(mPasswordRepeatText)) {
-                        parameter = "?newusername="+mUsernameText + "&newpassword=" + mPasswordText;
                         new Thread(new SigninThread()).start();
                     } else {
                         Toast.makeText(SigninActivity.this, "两次输入的密码不一致\n"
@@ -60,15 +63,15 @@ public class SigninActivity extends AppCompatActivity {
 
     private class SigninThread implements Runnable {
         String responseData;
-        String url = "http://192.168.199.194:8080/food/signin" + parameter;
+        String url = "http://192.168.199.194:8080/food/signin";
         @Override public void run() {
             try {
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                    .url(url)
+                FormBody formBody = new FormBody.Builder().build();
+                formBody = new FormBody.Builder()
+                    .add("newusername", mUsernameText)
+                    .add("newpassword", mPasswordText)
                     .build();
-                Response response = client.newCall(request).execute();
-                responseData = response.body().string();
+                responseData = postFormByOkHttp(url, formBody);
                 handler.post(new Runnable() {
                     @Override public void run() {
                         if (responseData.equals("success")) {
