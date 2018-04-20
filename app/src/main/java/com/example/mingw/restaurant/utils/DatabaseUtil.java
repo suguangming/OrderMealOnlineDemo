@@ -3,13 +3,17 @@ package com.example.mingw.restaurant.utils;
 import com.example.mingw.restaurant.FoodCart;
 import java.util.List;
 import org.litepal.crud.DataSupport;
-import org.litepal.tablemanager.Connector;
 
+/**
+ * DatabaseUtil
+ * @author guangming
+ * @date 2018/04/20
+ */
 public class DatabaseUtil {
 
     /**
      * 添加到购物车数据库
-     * @param foodCart
+     * @param foodCart foodCart类
      */
     public static void addToDatabase(FoodCart foodCart) {
         List<FoodCart> foodCartListTemp = DataSupport.where("foodname = ?", foodCart.getFoodname()).find(FoodCart.class);
@@ -29,21 +33,17 @@ public class DatabaseUtil {
         return DataSupport.findAll(FoodCart.class);
     }
 
-    public static void createDataBase() {
-        Connector.getDatabase();
-    }
-
 
     /**
      * 更新单个订单的数量
-     * @param operation
-     * @param foodCartName
+     * @param operation 操作类型
+     * @param foodName 食品名称
      */
-    public static void updateData(String operation, String foodCartName) {
+    public static void updateData(String operation, String foodName) {
         switch (operation){
             case "plus":
                 FoodCart foodCartTemp1;
-                List<FoodCart> foodCartListTemp1 = DataSupport.where("foodname = ?", foodCartName).find(FoodCart.class);
+                List<FoodCart> foodCartListTemp1 = DataSupport.where("foodname = ?", foodName).find(FoodCart.class);
                 foodCartTemp1 = foodCartListTemp1.get(0);
                 foodCartTemp1.setFoodnumber(foodCartTemp1.getFoodnumber()+1);
                 foodCartTemp1.setStatus("未提交");
@@ -51,7 +51,7 @@ public class DatabaseUtil {
                 break;
             case "minus":
                 FoodCart foodCartTemp2;
-                List<FoodCart> foodCartListTemp2 = DataSupport.where("foodname = ?", foodCartName).find(FoodCart.class);
+                List<FoodCart> foodCartListTemp2 = DataSupport.where("foodname = ?", foodName).find(FoodCart.class);
                 foodCartTemp2 = foodCartListTemp2.get(0);
                 foodCartTemp2.setStatus("未提交");
                 foodCartTemp2.setFoodnumber(foodCartTemp2.getFoodnumber()-1);
@@ -65,15 +65,14 @@ public class DatabaseUtil {
 
     /**
      * 更改单个订单状态
-     * @param foodCart
-     * @param newStatus
+     * @param foodCart foodCart类
+     * @param newStatus 新状态
      */
     public static void setStatus(FoodCart foodCart, String newStatus) {
         List<FoodCart> foodCartListTemp = DataSupport.where("foodname = ?", foodCart.getFoodname()).find(FoodCart.class);
         FoodCart foodCartTemp = foodCartListTemp.get(0);
         foodCartTemp.setStatus(newStatus);
         foodCartTemp.updateAll("foodname = ?", foodCartTemp.getFoodname());
-
     }
 
 
@@ -81,9 +80,14 @@ public class DatabaseUtil {
      * 清除数据库中无效数据
      */
     public static void clearEmptyData() {
-        DataSupport.deleteAll(FoodCart.class, "foodnumber < ?", "1");
+        DataSupport.deleteAll(FoodCart.class, "foodnumber = ?", "0");
     }
 
+
+    /**
+     * 删除订单
+     * @param foodCartName 食品名称
+     */
     public static void deleteOrder(String foodCartName) {
         DataSupport.deleteAll(FoodCart.class, "foodname = ?", foodCartName);
     }

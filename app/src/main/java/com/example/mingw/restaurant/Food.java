@@ -1,5 +1,10 @@
 package com.example.mingw.restaurant;
 
+/**
+ * Food class
+ * @author guangming
+ * @date 2018/04/20
+ */
 public class Food {
     private int id;
     private String name;
@@ -14,13 +19,16 @@ public class Food {
         this.price = price;
     }
 
+
     public int getId() {
         return id;
     }
 
+
     public void setId(int id) {
         this.id = id;
     }
+
 
     public String getName() {
         return name;

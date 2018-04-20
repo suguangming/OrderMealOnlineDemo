@@ -1,21 +1,20 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
         <!--logo-->
         <ImageView
-            android:src="@drawable/ic_login_restaurant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_login_restaurant"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal"/>
 
@@ -25,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
+
             <EditText
                 android:id="@+id/et_signup_username"
                 android:layout_width="match_parent"
@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
+
             <EditText
                 android:id="@+id/et_login_password"
                 android:layout_width="match_parent"
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
+
             <EditText
                 android:id="@+id/et_signup_password_repeat"
                 android:layout_width="match_parent"
