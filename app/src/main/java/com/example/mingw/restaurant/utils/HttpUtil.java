@@ -7,10 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/**
- * @author guangming
- * @date 2018.4.20
- */
+
 public class HttpUtil {
 
     /**

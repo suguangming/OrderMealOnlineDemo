@@ -18,9 +18,7 @@ import com.example.mingw.restaurant.R;
 import com.example.mingw.restaurant.utils.DatabaseUtil;
 import java.util.List;
 
-/**
- *
- */
+
 public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.ViewHolder> {
 
     private Context mContext;

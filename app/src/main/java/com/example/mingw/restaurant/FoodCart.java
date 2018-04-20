@@ -2,11 +2,7 @@ package com.example.mingw.restaurant;
 
 import org.litepal.crud.DataSupport;
 
-/**
- * FoodCart class
- * @author guangming
- * @date 2018/04/20
- */
+
 public class FoodCart extends DataSupport{
 
     private String foodname;

@@ -4,11 +4,7 @@ import com.example.mingw.restaurant.FoodCart;
 import java.util.List;
 import org.litepal.crud.DataSupport;
 
-/**
- * DatabaseUtil
- * @author guangming
- * @date 2018/04/20
- */
+
 public class DatabaseUtil {
 
     /**

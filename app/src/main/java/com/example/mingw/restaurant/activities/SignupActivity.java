@@ -17,16 +17,12 @@ import okhttp3.FormBody;
 
 import static com.example.mingw.restaurant.utils.HttpUtil.postFormByOkHttp;
 
-/**
- * SignupActivity class
- * @author guangming
- * @date 2018/04/20
- */
+
 public class SignupActivity extends AppCompatActivity {
 
     private static Handler handler = new Handler();
-    private String mUsernameText;
-    private String mPasswordText;
+    private String username;
+    private String password;
     private String server;
 
 
@@ -34,28 +30,26 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        final EditText mUsername = findViewById(R.id.et_signup_username);
-        final EditText mPassword = findViewById(R.id.et_login_password);
-        final EditText mPasswordRepeat = findViewById(R.id.et_signup_password_repeat);
+        final EditText editTextUsername = findViewById(R.id.et_signup_username);
+        final EditText editTextPassword = findViewById(R.id.et_login_password);
+        final EditText editTextPasswordRepeat = findViewById(R.id.et_signup_password_repeat);
         final InputMethodManager inputMethodManager
             = (InputMethodManager) this.getApplicationContext()
             .getSystemService(Context.INPUT_METHOD_SERVICE);
-
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String serverIP = pref.getString("server_url", "192.168.199.194");
         server = "http://" + serverIP + ":8080/food/signup";
-
-        Button mButtonSignup = findViewById(R.id.bt_signin_signup_button);
-        mButtonSignup.setOnClickListener(new View.OnClickListener() {
+        Button buttonSignup = findViewById(R.id.bt_signin_signup_button);
+        buttonSignup.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                mUsernameText = mUsername.getText().toString();
-                mPasswordText = mPassword.getText().toString();
-                String mPasswordRepeatText = mPasswordRepeat.getText().toString();
+                username = editTextUsername.getText().toString();
+                password = editTextPassword.getText().toString();
+                String mPasswordRepeatText = editTextPasswordRepeat.getText().toString();
                 assert inputMethodManager != null;
-                inputMethodManager.hideSoftInputFromWindow(mPasswordRepeat.getWindowToken(), 0);
-                if (!mUsernameText.isEmpty() && !mPasswordText.isEmpty() &&
+                inputMethodManager.hideSoftInputFromWindow(editTextPasswordRepeat.getWindowToken(), 0);
+                if (!username.isEmpty() && !password.isEmpty() &&
                     !mPasswordRepeatText.isEmpty()) {
-                    if (mPasswordText.equals(mPasswordRepeatText)) {
+                    if (password.equals(mPasswordRepeatText)) {
                         new Thread(new SignupThread()).start();
                     } else {
                         Toast.makeText(SignupActivity.this, "两次输入的密码不一致", Toast.LENGTH_SHORT)
@@ -81,8 +75,8 @@ public class SignupActivity extends AppCompatActivity {
             try {
                 FormBody formBody;
                 formBody = new FormBody.Builder()
-                    .add("newusername", mUsernameText)
-                    .add("newpassword", mPasswordText)
+                    .add("newusername", username)
+                    .add("newpassword", password)
                     .build();
                 responseData = postFormByOkHttp(server, formBody);
                 handler.post(new Runnable() {

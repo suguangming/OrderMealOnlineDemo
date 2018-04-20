@@ -19,11 +19,7 @@ import okhttp3.FormBody;
 
 import static com.example.mingw.restaurant.utils.HttpUtil.postFormByOkHttp;
 
-/**
- * LoginActivity class
- * @author guangming
- * @date 2018/04/20
- */
+
 public class LoginActivity extends AppCompatActivity {
 
     private static Handler handler = new Handler();

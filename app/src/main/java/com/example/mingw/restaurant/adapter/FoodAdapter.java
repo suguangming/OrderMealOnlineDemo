@@ -17,11 +17,7 @@ import com.example.mingw.restaurant.R;
 import com.example.mingw.restaurant.activities.DetailActivity;
 import java.util.List;
 
-/**
- * FoodAdapter class
- * @author guangming
- * @date 2018/04/20
- */
+
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     private Context mContext;

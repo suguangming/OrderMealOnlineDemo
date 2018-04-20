@@ -26,11 +26,7 @@ import okhttp3.FormBody;
 import static com.example.mingw.restaurant.utils.DatabaseUtil.clearEmptyData;
 import static com.example.mingw.restaurant.utils.DatabaseUtil.setStatus;
 
-/**
- * FoodCartActivity class
- * @author guangming
- * @date 2018/04/20
- */
+
 public class FoodCartActivity extends AppCompatActivity {
 
     private static Handler handler = new Handler();

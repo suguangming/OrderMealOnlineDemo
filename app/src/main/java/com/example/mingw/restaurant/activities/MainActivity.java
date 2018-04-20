@@ -24,11 +24,7 @@ import java.util.List;
 
 import static com.example.mingw.restaurant.utils.HttpUtil.getStringByOkHttp;
 
-/**
- * MainActivity class
- * @author guangming
- * @date 2018/04/20
- */
+
 public class MainActivity extends AppCompatActivity {
 
     Gson gson = new Gson();
@@ -126,12 +122,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * 双击退出
-     * @param keyCode
-     * @param event
-     * @return
-     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         int minLastTime = 2000;

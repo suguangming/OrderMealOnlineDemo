@@ -18,19 +18,13 @@ import com.example.mingw.restaurant.FoodCart;
 import com.example.mingw.restaurant.R;
 import com.example.mingw.restaurant.utils.DatabaseUtil;
 
-/**
- * DetailActivity class
- * @author guangming
- * @date 2018/04/20
- */
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String FOOD_IMAGE_URL = "food_image_id";
     public static final String FOOD_NAME = "food_name";
     public static final String FOOD_PRICE = "food_price";
     public static final String FOOD_CONTENT = "food_content";
-
-    private SharedPreferences pref;
 
 
     @Override
@@ -41,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         // 获取PreferenceManager
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String serverIP = pref.getString("server_url", "192.168.199.194");
         String imageServer = "http://" + serverIP + ":8080/food/img/";
         final String foodName = intent.getStringExtra(FOOD_NAME);
@@ -79,5 +73,4 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
     }
-
 }
