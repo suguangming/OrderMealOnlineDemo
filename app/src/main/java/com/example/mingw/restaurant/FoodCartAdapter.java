@@ -1,6 +1,8 @@
 package com.example.mingw.restaurant;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.mingw.restaurant.utils.DatabaseUtil;
 import java.util.List;
+import org.w3c.dom.Text;
 
 public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.ViewHolder> {
 
@@ -25,6 +28,7 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.ViewHo
         TextView cartFoodName;
         TextView cartFoodNumber;
         TextView cartFoodPrice;
+        TextView cartStatus;
         ImageButton cartFoodNumberMinus;
         ImageButton cartFoodNumberPlus;
 
@@ -33,6 +37,7 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.ViewHo
             cartFoodCardView = (CardView) view;
             cartFoodImage = (ImageView) view.findViewById(R.id.iv_cart_food_image);
             cartFoodName = (TextView) view.findViewById(R.id.tv_cart_food_name);
+            cartStatus = (TextView) view.findViewById(R.id.tv_cart_food_status);
             cartFoodNumber = (TextView) view.findViewById(R.id.tv_cart_food_number);
             cartFoodPrice = (TextView) view.findViewById(R.id.tv_cart_food_price);
             cartFoodNumberMinus = (ImageButton) view.findViewById(R.id.ibt_cart_food_number_minus);
@@ -69,22 +74,42 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.ViewHo
                 holder.cartFoodNumber.setText(i+1+"");
             }
         });
+        holder.cartFoodCardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override public boolean onLongClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+                dialog.setMessage("确定删除");
+                dialog.setCancelable(true);
+                dialog.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        DatabaseUtil.deleteOrder(holder.cartFoodName.getText().toString());
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                return true;
+            }
+        });
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         FoodCart foodCart = mFoodCartList.get(position);
-        if (foodCart.getNumber() == 0) {
+        if (foodCart.getFoodnumber() == 0) {
             holder.cartFoodCardView.setVisibility(View.GONE);
         }else {
             holder.cartFoodCardView.setVisibility(View.VISIBLE);
             String imgUrl = foodCart.getImgUrl();
             Glide.with(mContext).load(imgUrl).into(holder.cartFoodImage);
-            // holder.cartFoodImage.setImageResource(R.drawable.food_burger);
-            holder.cartFoodName.setText(foodCart.getName());
-            holder.cartFoodNumber.setText(foodCart.getNumber()+"");
-            holder.cartFoodPrice.setText("￥" + foodCart.getPrice() * foodCart.getNumber());
+            holder.cartFoodName.setText(foodCart.getFoodname());
+            holder.cartStatus.setText(foodCart.getStatus());
+            holder.cartFoodNumber.setText(foodCart.getFoodnumber()+"");
+            holder.cartFoodPrice.setText("￥" + foodCart.getFoodprice() * foodCart.getFoodnumber());
         }
     }
 

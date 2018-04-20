@@ -39,6 +39,13 @@ public class HttpUtil {
         return null;
     }
 
+
+    /**
+     * 使用OKHttp post订单数据
+     * @param address
+     * @param formBody
+     * @return
+     */
     public static String postFormByOkHttp(String address, FormBody formBody) {
         try {
             OkHttpClient client = new OkHttpClient();

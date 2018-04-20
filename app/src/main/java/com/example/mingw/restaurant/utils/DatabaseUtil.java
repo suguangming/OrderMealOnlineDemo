@@ -1,7 +1,5 @@
 package com.example.mingw.restaurant.utils;
 
-import android.content.Context;
-import android.widget.Toast;
 import com.example.mingw.restaurant.FoodCart;
 import java.util.List;
 import org.litepal.crud.DataSupport;
@@ -9,35 +7,24 @@ import org.litepal.tablemanager.Connector;
 
 public class DatabaseUtil {
 
-    public static void addDefaultData(){
-        DataSupport.deleteAll(FoodCart.class);
-        FoodCart foodCart1 = new FoodCart();
-        foodCart1.setName("aaa");
-        foodCart1.setNumber(1);
-        foodCart1.setPrice(10);
-        foodCart1.save();
-
-        FoodCart foodCart2 = new FoodCart();
-        foodCart2.setName("bbb");
-        foodCart2.setNumber(2);
-        foodCart2.setPrice(20);
-        foodCart2.save();
-
-        FoodCart foodCart3 = new FoodCart();
-        foodCart3.setName("ccc");
-        foodCart3.setNumber(3);
-        foodCart3.setPrice(30);
-        foodCart3.save();
-    }
-
+    /**
+     * 添加到购物车数据库
+     * @param foodCart
+     */
     public static void addToDatabase(FoodCart foodCart) {
-        if (foodCart.isSaved()){
-            updateData("plus", foodCart.getName());
-        } else {
+        List<FoodCart> foodCartListTemp = DataSupport.where("foodname = ?", foodCart.getFoodname()).find(FoodCart.class);
+        if (foodCartListTemp.isEmpty()) {
             foodCart.save();
+        } else {
+            updateData("plus", foodCart.getFoodname());
         }
-
     }
+
+
+    /**
+     * 获取数据库中所有订单
+     * @return 所有订单的 List
+     */
     public static List<FoodCart> getAllFoodCartData(){
         return DataSupport.findAll(FoodCart.class);
     }
@@ -46,50 +33,59 @@ public class DatabaseUtil {
         Connector.getDatabase();
     }
 
+
+    /**
+     * 更新单个订单的数量
+     * @param operation
+     * @param foodCartName
+     */
     public static void updateData(String operation, String foodCartName) {
         switch (operation){
             case "plus":
-                FoodCart foodCartTemp1 = new FoodCart();
-                List<FoodCart> foodCartListTemp1 = DataSupport.where("name = ?", foodCartName).find(FoodCart.class);
+                FoodCart foodCartTemp1;
+                List<FoodCart> foodCartListTemp1 = DataSupport.where("foodname = ?", foodCartName).find(FoodCart.class);
                 foodCartTemp1 = foodCartListTemp1.get(0);
-                foodCartTemp1.setNumber(foodCartTemp1.getNumber()+1);
-                foodCartTemp1.updateAll("name = ?", foodCartTemp1.getName());
+                foodCartTemp1.setFoodnumber(foodCartTemp1.getFoodnumber()+1);
+                foodCartTemp1.setStatus("未提交");
+                foodCartTemp1.updateAll("foodname = ?", foodCartTemp1.getFoodname());
                 break;
             case "minus":
                 FoodCart foodCartTemp2;
-                List<FoodCart> foodCartListTemp2 = DataSupport.where("name = ?", foodCartName).find(FoodCart.class);
+                List<FoodCart> foodCartListTemp2 = DataSupport.where("foodname = ?", foodCartName).find(FoodCart.class);
                 foodCartTemp2 = foodCartListTemp2.get(0);
-                foodCartTemp2.setNumber(foodCartTemp2.getNumber()-1);
-                foodCartTemp2.updateAll("name = ?", foodCartTemp2.getName());
+                foodCartTemp2.setStatus("未提交");
+                foodCartTemp2.setFoodnumber(foodCartTemp2.getFoodnumber()-1);
+                foodCartTemp2.updateAll("foodname = ?", foodCartTemp2.getFoodname());
                 break;
             default:
                 break;
         }
     }
 
-    public void newData(Context context, FoodCart foodCart) {
-        FoodCart foodCartTemp = foodCart;
-        List<FoodCart> foodCartListTemp = DataSupport.select("name", foodCartTemp.getName()).find(FoodCart.class);
-        if (foodCartListTemp.isEmpty()){
-            foodCart.save();
-        } else {
-            Toast.makeText(context, "already exist", Toast.LENGTH_SHORT).show();
-        }
+
+    /**
+     * 更改单个订单状态
+     * @param foodCart
+     * @param newStatus
+     */
+    public static void setStatus(FoodCart foodCart, String newStatus) {
+        List<FoodCart> foodCartListTemp = DataSupport.where("foodname = ?", foodCart.getFoodname()).find(FoodCart.class);
+        FoodCart foodCartTemp = foodCartListTemp.get(0);
+        foodCartTemp.setStatus(newStatus);
+        foodCartTemp.updateAll("foodname = ?", foodCartTemp.getFoodname());
+
     }
 
+
+    /**
+     * 清除数据库中无效数据
+     */
     public static void clearEmptyData() {
-        List<FoodCart> foodCarts = getAllFoodCartData();
-        int index = 0;
-        for (FoodCart foodCart : foodCarts) {
-            if (foodCart.getNumber()==0) {
-                foodCarts.remove(index);
-            }
-            index++;
-        }
-        DataSupport.deleteAll(FoodCart.class);
-        for (FoodCart foodCart : foodCarts) {
-            foodCart.save();
-        }
+        DataSupport.deleteAll(FoodCart.class, "foodnumber < ?", "1");
+    }
+
+    public static void deleteOrder(String foodCartName) {
+        DataSupport.deleteAll(FoodCart.class, "foodname = ?", foodCartName);
     }
 
 }

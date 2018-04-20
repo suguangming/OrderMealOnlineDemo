@@ -4,47 +4,50 @@ import org.litepal.crud.DataSupport;
 
 public class FoodCart extends DataSupport{
 
-    private String name;
+    private String foodname;
     private String imgUrl;
-    private int number;
-    private double price;
+    private int foodnumber;
+    private double foodprice;
+    private String status;
 
-    public String getName() {
-        return name;
+    public String getFoodname() {
+        return foodname;
     }
 
-
-    public void setName(String name) {
-        this.name = name;
+    public void setFoodname(String foodname) {
+        this.foodname = foodname;
     }
-
 
     public String getImgUrl() {
         return imgUrl;
     }
 
-
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 
-
-    public int getNumber() {
-        return number;
+    public int getFoodnumber() {
+        return foodnumber;
     }
 
-
-    public void setNumber(int number) {
-        this.number = number;
+    public void setFoodnumber(int foodnumber) {
+        this.foodnumber = foodnumber;
     }
 
-
-    public double getPrice() {
-        return price;
+    public double getFoodprice() {
+        return foodprice;
     }
 
-
-    public void setPrice(double price) {
-        this.price = price;
+    public void setFoodprice(double foodprice) {
+        this.foodprice = foodprice;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }
