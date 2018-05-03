@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private static Handler handler = new Handler();
     private String username;
     private String password;
+    private String serverIP;
     private String server;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -42,39 +43,46 @@ public class LoginActivity extends AppCompatActivity {
         final InputMethodManager inputMethodManager
             = (InputMethodManager) this.getApplicationContext()
             .getSystemService(Context.INPUT_METHOD_SERVICE);
+        //记住密码自动填充
         final CheckBox checkBoxRememberPassword = findViewById(R.id.cbRememberPassword);
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        String serverIP = pref.getString("server_url", "192.168.199.194");
-        server = "http://" + serverIP + ":8080/food/login";
         boolean isRemember = pref.getBoolean("remember_password", false);
         checkBoxRememberPassword.setChecked(isRemember);
         if (isRemember) {
             username = pref.getString("username", "");
             password = pref.getString("password", "");
+            serverIP = pref.getString("server_url", "");
             editTextUsername.setText(username);
             editTextPassword.setText(password);
+            editTextServerIP.setText(serverIP);
         }
-
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 username = editTextUsername.getText().toString();
                 password = editTextPassword.getText().toString();
-                assert inputMethodManager != null;
-                inputMethodManager.hideSoftInputFromWindow(editTextPassword.getWindowToken(), 0);
+                serverIP = editTextServerIP.getText().toString();
+                server = "http://" + serverIP + ":8080/food/login";
+                if (inputMethodManager != null) {
+                    inputMethodManager.hideSoftInputFromWindow(editTextPassword.getWindowToken(), 0);
+                }
                 if (!username.isEmpty() && !password.isEmpty()) {
-                    editor = pref.edit();
-                    if (checkBoxRememberPassword.isChecked()) {
-                        editor.putBoolean("remember_password", true);
-                        editor.putString("username", username);
-                        editor.putString("password", password);
-                        editor.putString("server_url", editTextServerIP.getText().toString());
+                    if (!serverIP.isEmpty()) {
+                        editor = pref.edit();
+                        if (checkBoxRememberPassword.isChecked()) {
+                            editor.putBoolean("remember_password", true);
+                            editor.putString("username", username);
+                            editor.putString("password", password);
+                            editor.putString("server_url", serverIP);
+                        } else {
+                            editor.clear();
+                        }
+                        editor.apply();
+                        ProgressBar p  = findViewById(R.id.pb_login_login_progress);
+                        p.setVisibility(View.VISIBLE);
+                        new Thread(new LoginThread()).start();
                     } else {
-                        editor.clear();
+                        Toast.makeText(LoginActivity.this, "服务器地址为空", Toast.LENGTH_SHORT).show();
                     }
-                    editor.apply();
-                    ProgressBar p  = findViewById(R.id.pb_login_login_progress);
-                    p.setVisibility(View.VISIBLE);
-                    new Thread(new LoginThread()).start();
                 } else {
                     Toast.makeText(LoginActivity.this, "用户名与密码不匹配", Toast.LENGTH_SHORT).show();
                 }

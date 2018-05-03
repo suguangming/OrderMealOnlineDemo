@@ -23,6 +23,7 @@ public class SignupActivity extends AppCompatActivity {
     private static Handler handler = new Handler();
     private String username;
     private String password;
+    private String serverIP;
     private String server;
 
 
@@ -33,17 +34,22 @@ public class SignupActivity extends AppCompatActivity {
         final EditText editTextUsername = findViewById(R.id.et_signup_username);
         final EditText editTextPassword = findViewById(R.id.et_login_password);
         final EditText editTextPasswordRepeat = findViewById(R.id.et_signup_password_repeat);
+        final EditText editTextServerIP = findViewById(R.id.et_signup_server);
         final InputMethodManager inputMethodManager
             = (InputMethodManager) this.getApplicationContext()
             .getSystemService(Context.INPUT_METHOD_SERVICE);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        String serverIP = pref.getString("server_url", "192.168.199.194");
-        server = "http://" + serverIP + ":8080/food/signup";
-        Button buttonSignup = findViewById(R.id.bt_signin_signup_button);
+        serverIP = pref.getString("server_url", "");
+        if (!serverIP.isEmpty()) {
+            editTextServerIP.setText(serverIP);
+        }
+        Button buttonSignup = findViewById(R.id.bt_signup_signup_button);
         buttonSignup.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 username = editTextUsername.getText().toString();
                 password = editTextPassword.getText().toString();
+                serverIP = editTextServerIP.getText().toString();
+                server = "http://" + serverIP + ":8080/food/signup";
                 String mPasswordRepeatText = editTextPasswordRepeat.getText().toString();
                 assert inputMethodManager != null;
                 inputMethodManager.hideSoftInputFromWindow(editTextPasswordRepeat.getWindowToken(), 0);
@@ -58,6 +64,14 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(SignupActivity.this, "无效的用户名或密码", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        Button buttoBackTonSignin = findViewById(R.id.bt_signup_login_button);
+        buttoBackTonSignin.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }

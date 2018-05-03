@@ -51,7 +51,7 @@ public class FoodCartActivity extends AppCompatActivity {
             R.id.fab_cart_submit_order);
         // 获取PreferenceManager
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        String serverIP = pref.getString("server_url", "192.168.199.194");
+        String serverIP = pref.getString("server_url", "");
         server = "http://" + serverIP + ":8080/food/order";
         clearEmptyData();
         foodCartList = new ArrayList<>();
@@ -60,7 +60,25 @@ public class FoodCartActivity extends AppCompatActivity {
         getFoodCart();
         fabToSubmitOrder.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                new Thread(new SubmitOrderThread()).start();
+                Double orderPrice = 0.0;
+                for(FoodCart f : foodCartList){
+                  orderPrice = orderPrice + f.getFoodprice()*f.getFoodnumber();
+                }
+                AlertDialog.Builder dialog = new AlertDialog.Builder(FoodCartActivity.this);
+                dialog.setTitle("付款");
+                dialog.setMessage("请付款￥"+ orderPrice.toString());
+                dialog.setCancelable(false);
+                dialog.setPositiveButton("付款", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        new Thread(new SubmitOrderThread()).start();
+                    }
+                });
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
         //下拉刷新
@@ -113,6 +131,7 @@ public class FoodCartActivity extends AppCompatActivity {
      * 提交订单线程
      */
     private class SubmitOrderThread implements Runnable {
+        String unSubmitCode = "未提交";
         String submitSuccessCode = "submit success";
         String responseData;
         String username = pref.getString("current_username", "");
@@ -121,7 +140,7 @@ public class FoodCartActivity extends AppCompatActivity {
         @Override public void run() {
             FormBody formBody;
             for (FoodCart f : foodCartList) {
-                if (f.getStatus().equals("未提交")) {
+                if (unSubmitCode.equals(f.getStatus())) {
                     formBody = new FormBody.Builder()
                         .add("type", "new")
                         .add("username", username)
@@ -138,16 +157,16 @@ public class FoodCartActivity extends AppCompatActivity {
             handler.post(new Runnable() {
                 @Override public void run() {
                     if (responseData != null && submitSuccessCode.equals(responseData)) {
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(FoodCartActivity.this);
-                        dialog.setTitle("订单提交");
-                        dialog.setMessage("订单提交成功");
-                        dialog.setCancelable(false);
-                        dialog.setPositiveButton("我知道了", new DialogInterface.OnClickListener() {
+                        AlertDialog.Builder mDialog = new AlertDialog.Builder(FoodCartActivity.this);
+                        mDialog.setTitle("订单提交");
+                        mDialog.setMessage("订单提交成功");
+                        mDialog.setCancelable(false);
+                        mDialog.setPositiveButton("我知道了", new DialogInterface.OnClickListener() {
                             @Override public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
                         });
-                        dialog.show();
+                        mDialog.show();
                         adapter.notifyDataSetChanged();
                     }
                 }

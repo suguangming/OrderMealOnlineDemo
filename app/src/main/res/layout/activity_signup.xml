@@ -63,9 +63,25 @@
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
+        <!--服务器地址-->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/et_signup_server"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="服务器地址"
+                android:text=""/>
+        </android.support.design.widget.TextInputLayout>
+
         <!--signup button-->
         <Button
-            android:id="@+id/bt_signin_signup_button"
+            android:id="@+id/bt_signup_signup_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

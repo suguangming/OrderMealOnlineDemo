@@ -36,7 +36,7 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         // 获取PreferenceManager
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        String serverIP = pref.getString("server_url", "192.168.199.194");
+        String serverIP = pref.getString("server_url", "");
         String imageServer = "http://" + serverIP + ":8080/food/img/";
         final String foodName = intent.getStringExtra(FOOD_NAME);
         String foodContent = intent.getStringExtra(FOOD_CONTENT);

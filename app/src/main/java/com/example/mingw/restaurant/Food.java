@@ -51,17 +51,8 @@ public class Food {
     }
 
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-
     public double getPrice() {
         return price;
     }
 
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 }
