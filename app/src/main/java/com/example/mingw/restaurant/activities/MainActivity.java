@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.tb_main_toolbar);
         setSupportActionBar(toolbar);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        String serverIP = pref.getString("server_url", "192.168.199.194");
+        String serverIP = pref.getString("server_url", "");
         server = "http://" + serverIP + ":8080/food/index";
         FloatingActionButton fabToCart = findViewById(R.id.fab_main_go_to_foodCart);
         RecyclerView recyclerView = findViewById(R.id.rv_main_food_list);
